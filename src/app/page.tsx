@@ -1,95 +1,63 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// pages/page.tsx
+import React from 'react';
+import Graph from '../../components/graph';
 
-export default function Home() {
+const Page: React.FC = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <section className="hero is-fullheight" id="playground">
+      <div className="">
+        <div className="">
+          <h1 className="">It's your turn.</h1>
+          <div className="">
+            <div className="">
+              <div className="">
+                <label className="">Function</label>
+                <div className="">
+                  <input className="" type="text" id="function-input" defaultValue="x^2+x" />
+                </div>
+              </div>
+              <p>functions you should try (click to auto-format):</p>
+              <div className="">
+                <button className="" id="fn-x-2">x<sup><sup>2</sup></sup></button>
+                <button className="" id="fn-x-3">x<sup><sup>3</sup></sup></button>
+                <button className="" id="fn-sin-x">sin(x)</button>
+                <button className="" id="fn-1-x">1/x</button>
+                <button className="" id="fn-poly-x">poly</button>
+              </div>
+              <div className="">
+                <label className="">Starting Point</label>
+                <div className="">
+                  <input className="" id="initial-start" type="number" defaultValue="5" />
+                </div>
+              </div>
+              <button className="" id="start-button">
+                <span className="">
+                  <i className=""></i>
+                </span>
+                <span>Set Up</span>
+              </button>
+              <hr />
+              <div className="">
+                <label className="">Learning Rate</label>
+                <div className="">
+                  <input className="" id="learning-rate" type="number" defaultValue="0.25" />
+                </div>
+              </div>
+              <button className="" id="update-button">
+                <span className="">
+                  <i className=""></i>
+                </span>
+                <span>Next Iteration</span>
+              </button>
+            </div>
+            <div className="">
+              <Graph />
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </section>
   );
-}
+};
+
+export default Page;
