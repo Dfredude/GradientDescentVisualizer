@@ -6,7 +6,7 @@ import { derivative, compile, EvalFunction } from 'mathjs';
 const Graph: React.FC = () => {
   let g1options: any = {
     target: '#graph-1',
-    title: "set up",
+    title: "Gradient Descent",
     xAxis: {
       label: 'x - axis',
       domain: [-6, 6]
