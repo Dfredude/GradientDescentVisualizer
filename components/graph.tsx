@@ -20,7 +20,7 @@ const Graph: React.FC = () => {
         fn: 'x^2+x',
         derivative: {
           fn: '2 * x + 1',
-          x0: 2
+          x0: 4
         },
         attr: { "stroke-width": 3 }
       }
@@ -43,7 +43,7 @@ const Graph: React.FC = () => {
     delete options.title;
     functionPlot(options);
 
-    options.title = "iteration " + iter;
+    options.title = "Iterations " + iter;
     options.data[0].fn = fn;
     options.data[0].derivative = {
       fn: deriv,
@@ -86,7 +86,7 @@ const Graph: React.FC = () => {
     const currentPosElement = document.getElementById("current-pos");
 
     startButton?.addEventListener("click", () => {
-      let inputEval = initialStart?.value;
+      let inputEval = initialStart?.value == null ? 4 : initialStart.value;
       let evalAt = Number(inputEval);
       if (isNaN(evalAt)) { return; }
 
@@ -138,7 +138,8 @@ const Graph: React.FC = () => {
       <div id="graph-1"></div>
       <div className="tags has-addons are-large">
         <span className="tag is-primary">Current Point</span>
-        <span className="tag is-dark" id="current-pos">set up your graph!</span>
+        <span>: <span className="tag is-dark" id="current-pos">4</span></span>
+        
       </div>
     </div>
   );

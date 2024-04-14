@@ -25,7 +25,7 @@ const Page: React.FC = () => {
                 <div className="flex self-centern space-x-2 pt-5 pb-5">
                   <label className="italic">Starting Point</label>
                   <div className="pl-5">
-                    <input className="w-10" id="initial-start" type="number" defaultValue="5" />
+                    <input className="w-10" id="initial-start" type="number" defaultValue="4" />
                   </div>
                   <button className="w-25 bg-purple-500 hover:bg-purple-700 text-white py-2 px-4 rounded" id="start-button">Set Up</button>
                 </div>
