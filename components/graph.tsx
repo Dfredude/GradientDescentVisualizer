@@ -1,9 +1,10 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import functionPlot from 'function-plot';
 import { derivative, compile, EvalFunction } from 'mathjs';
 
 const Graph: React.FC = () => {
+  const [chartLoaded, setChartLoaded] = useState(false);
   let g1options: any = {
     target: '#graph-1',
     title: "Gradient Descent",
@@ -131,16 +132,23 @@ const Graph: React.FC = () => {
     fnPolyX?.addEventListener("click", () => setFnInputVal("x + 2 * (x^2) + (0.4) * x^3", 2));
 
     functionPlot(g1options);
+    setChartLoaded(true);
   }, []);
 
   return (
     <div>
       <div id="graph-1"></div>
+      { chartLoaded ?
       <div className="tags has-addons are-large">
-        <span className="tag is-primary">Current Point</span>
-        <span>: <span className="tag is-dark" id="current-pos">4</span></span>
-        
+        <span className="tag is-primary">Current Point: </span>
+        <span><span className="tag is-dark" id="current-pos">4</span></span>
       </div>
+      : <div className="tags has-addons are-large">
+        <span className="tag is-primary"></span>
+        <span><span className="tag is-dark" id="current-pos"></span></span>
+        <div>Loading chart...</div>
+      </div>
+      }
     </div>
   );
 };
