@@ -41,7 +41,7 @@ const Page: React.FC = () => {
                   Next Iteration
                 </button>
             </div>
-            <div className=" p-20">
+            <div className="rounded-lg shadow-xl m-20 p-20">
                 <Graph />
             </div>
         </div>

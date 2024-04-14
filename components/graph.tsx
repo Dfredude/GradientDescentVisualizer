@@ -8,6 +8,8 @@ const Graph: React.FC = () => {
   let g1options: any = {
     target: '#graph-1',
     title: "Gradient Descent",
+    height:600,
+    width:600,
     xAxis: {
       label: 'x - axis',
       domain: [-6, 6]
@@ -57,7 +59,11 @@ const Graph: React.FC = () => {
           {
             points: [pointsDiff],
             fnType: 'points',
-            graphType: 'scatter'
+            graphType: 'scatter',
+            color: "red",
+            attr: {
+              "r": 5 // Adjust the radius as needed
+            }
           }
         );
       }
