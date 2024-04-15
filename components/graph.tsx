@@ -1,14 +1,14 @@
 "use client"
 import React, { useEffect, useState} from 'react';
 import functionPlot from 'function-plot';
-import { derivative, compile, EvalFunction } from 'mathjs';
+import { derivative, compile, EvalFunction, isUndefined } from 'mathjs';
 
 const Graph: React.FC = () => {
   const [chartLoaded, setChartLoaded] = useState(false);
   let g1options: any = {
     target: '#graph-1',
     title: "Gradient Descent",
-    height:600,
+    height:500,
     width:600,
     xAxis: {
       label: 'x - axis',
@@ -43,37 +43,68 @@ const Graph: React.FC = () => {
   };
 
   const redrawPlot = (options: any, fn: string, deriv: string, evalAt: number, iter: number, pointsDiff?: any) => {
-    delete options.title;
-    functionPlot(options);
-
-    options.title = "Iterations " + iter;
-    options.data[0].fn = fn;
-    options.data[0].derivative = {
-      fn: deriv,
-      x0: evalAt
-    };
-
-    if (pointsDiff !== undefined) {
-      if (options.data.length === 1) {
-        options.data.push(
-          {
-            points: [pointsDiff],
-            fnType: 'points',
-            graphType: 'scatter',
-            color: "red",
-            attr: {
-              "r": 5 // Adjust the radius as needed
-            }
-          }
-        );
-      }
-      else {
-        options.data[1].points.push(pointsDiff);
-      }
+    // Check if options object is valid
+    if (!options || typeof options !== 'object') {
+        console.error("Invalid options object");
+        return;
     }
 
-    functionPlot(options);
-  };
+    // Ensure options has data property
+    if (!options.data || !Array.isArray(options.data)) {
+        options.data = [];
+    }
+
+    // Delete title property
+    delete options.title;
+
+    // Update options for function plot
+    options.title = "Iterations " + iter;
+
+    // Create a new data object
+    const dataObj = {
+        fn: fn,
+        derivative: {
+            fn: deriv,
+            x0: evalAt
+        }
+    };
+
+    // Set the data object as the first item in the options.data array
+    options.data[0] = dataObj;
+
+    // Handle pointsDiff
+    if (pointsDiff !== undefined) {
+        if (options.data.length === 1) {
+            options.data.push({
+                points: [pointsDiff],
+                fnType: 'points',
+                graphType: 'scatter',
+                color: "red",
+                attr: {
+                    "r": 5 // Adjust the radius as needed
+                }
+            });
+        } else {
+            options.data[1].points.push(pointsDiff);
+        }
+    }
+    
+    // Render the plot if iter is not -Infinity or Infinity
+
+    if (Number.isFinite(evalAt)) {
+      console.log(evalAt);
+      try {
+          functionPlot(options);
+      } catch (error) {
+          console.error("An error occurred while plotting the function:", error);
+      }
+  } else {
+      console.error("Invalid iteration value:", iter);
+  }
+};
+
+
+
 
   const updatePos = (current: number, deriv: EvalFunction, learning: number): number => {
     return current + (-1 * deriv.evaluate({ x: current }) * learning);
@@ -93,8 +124,11 @@ const Graph: React.FC = () => {
     const currentPosElement = document.getElementById("current-pos");
 
     startButton?.addEventListener("click", () => {
-      let inputEval = initialStart?.value == null ? 4 : initialStart.value;
+      let inputEval = initialStart?.value == null ? 0 : initialStart.value;
       let evalAt = Number(inputEval);
+      if(isUndefined(evalAt)){
+        return;
+      }
       if (isNaN(evalAt)) { return; }
 
       iterator = 0;
@@ -118,11 +152,14 @@ const Graph: React.FC = () => {
       if (!started) { return; }
       let learningRateVal = learningRate?.value;
       if (isNaN(Number(learningRateVal))) { return; }
+      
 
       iterator++;
+      
       currentPos = updatePos(currentPos, derivativeFunc, Number(learningRateVal));
-
       currentPosElement!.innerHTML = currentPos.toString();
+      if (!Number.isFinite( currentPos)) {
+        return;}
       redrawPlot(g1options, inputFunc, derivativeFunc.toString(), currentPos, iterator, [currentPos, compiledFunc.evaluate({ x: currentPos })]);
     });
 
